@@ -8,8 +8,8 @@ var testcases = []struct {
 	hands    string
 	expected bool
 }{
-	{"123456789mEEEW", true},
-	{"13579m2468pRGWES", false},
+	{"123456789m123p1s", true},
+	{"13579m2468p1357s", false},
 }
 
 func TestJudgeTenpai(t *testing.T) {
