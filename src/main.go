@@ -5,6 +5,22 @@ import (
 	"strconv"
 )
 
+func checkMeld(first, second, third string) bool {
+	if first == second && second == third {
+		return true
+	}
+
+	iFirst, _ := strconv.Atoi(first)
+	iSecond, _ := strconv.Atoi(second)
+	iThird, _ := strconv.Atoi(third)
+
+	if iFirst+1 == iSecond && iSecond == iThird-1 {
+		return true
+	}
+
+	return false
+}
+
 func JudgeTenpai(hands string) bool {
 	var number_of_meld = 0
 	second_prev_pai := string(hands[0])
@@ -28,11 +44,7 @@ func JudgeTenpai(hands string) bool {
 			continue
 		}
 
-		second_prev_pai_int, _ := strconv.Atoi(second_prev_pai)
-		first_prev_pai_int, _ := strconv.Atoi(first_prev_pai)
-		pai_int, _ := strconv.Atoi(pai)
-
-		if ((second_prev_pai_int + 1) == first_prev_pai_int) && (first_prev_pai_int == (pai_int - 1)) {
+		if checkMeld(second_prev_pai, first_prev_pai, pai) {
 			number_of_meld += 1
 			second_prev_pai = ""
 			first_prev_pai = ""

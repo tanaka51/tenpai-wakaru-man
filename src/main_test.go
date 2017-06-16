@@ -9,7 +9,10 @@ var testcases = []struct {
 	expected bool
 }{
 	{"123456789m123p1s", true},
+	{"111222333m111p1s", true},
+	{"EEESSSWWWNNNW", true},
 	{"13579m2468p1357s", false},
+	{"13579m2468pESWN", false},
 }
 
 func TestJudgeTenpai(t *testing.T) {
