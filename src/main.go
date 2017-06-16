@@ -21,7 +21,7 @@ func checkMeld(first, second, third string) bool {
 	return false
 }
 
-func JudgeTenpai(hands string) bool {
+func checkRegularWinningHands(hands string) bool {
 	var number_of_meld = 0
 	second_prev_pai := string(hands[0])
 	first_prev_pai := string(hands[1])
@@ -55,6 +55,33 @@ func JudgeTenpai(hands string) bool {
 	}
 
 	return (number_of_meld == 4)
+}
+
+func checkSevenPairs(hands string) bool {
+	prevPai := string(hands[0])
+	numberOfPairs := 0
+
+	for _, _pai := range hands[1:] {
+		pai := string(_pai)
+
+		switch pai {
+		case "m", "p", "s":
+			continue
+		}
+
+		if prevPai == pai {
+			numberOfPairs += 1
+			prevPai = ""
+		} else {
+			prevPai = pai
+		}
+	}
+
+	return numberOfPairs == 6
+}
+
+func JudgeTenpai(hands string) bool {
+	return checkRegularWinningHands(hands) || checkSevenPairs(hands)
 }
 
 func main() {
