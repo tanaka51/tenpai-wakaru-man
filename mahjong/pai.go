@@ -134,6 +134,19 @@ func (p Pai) IsNumber() bool {
 	}
 }
 
+func (p Pai) IsOrphan() bool {
+	switch p {
+	case Char1, Char9, Dots1, Dots9, Bamb1, Bamb9:
+		return true
+	case East, South, West, North:
+		return true
+	case White, Green, Red:
+		return true
+	default:
+		return false
+	}
+}
+
 func applySuits(hand *Hand, suit rune, paiStack []rune) {
 	switch suit {
 	case 'm':

@@ -15,6 +15,8 @@ var testcases = []struct {
 	{"13579m2468pESWN", false},
 	{"1133557799mEEN", true},
 	{"1111557799mEEN", false},
+	{"19m19p19sESWNHGR", true},
+	{"119m19p19sESWNHG", true},
 }
 
 func TestJudgeTenpai(t *testing.T) {

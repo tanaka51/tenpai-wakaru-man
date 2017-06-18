@@ -61,9 +61,33 @@ func checkSevenPairs(hand *mahjong.Hand) bool {
 	return len(pairs) == 6
 }
 
+func isThirteenOrphans(hand *mahjong.Hand) bool {
+	var tmpHand mahjong.Hand
+
+	appendIfMissing := func(hand mahjong.Hand, pai mahjong.Pai) mahjong.Hand {
+		for _, p := range hand {
+			if p == pai {
+				return hand
+			}
+		}
+
+		return append(hand, pai)
+	}
+
+	for _, pai := range *hand {
+		if pai.IsOrphan() {
+			tmpHand = appendIfMissing(tmpHand, pai)
+		} else {
+			return false
+		}
+	}
+
+	return len(tmpHand) == 13 || len(tmpHand) == 12
+}
+
 func JudgeTenpai(hands string) bool {
 	hand, _ := mahjong.Parse(hands)
-	return checkRegularWinningHands(hand) || checkSevenPairs(hand)
+	return checkRegularWinningHands(hand) || checkSevenPairs(hand) || isThirteenOrphans(hand)
 }
 
 func main() {
