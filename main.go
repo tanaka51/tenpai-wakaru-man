@@ -36,19 +36,29 @@ func checkRegularWinningHands(hand *mahjong.Hand) bool {
 }
 
 func checkSevenPairs(hand *mahjong.Hand) bool {
-	var numberOfPairs int
+	var pairs []mahjong.Pai
 	var prevPai mahjong.Pai
+
+	appendIfMissing := func(pairs []mahjong.Pai, pai mahjong.Pai) []mahjong.Pai {
+		for _, p := range pairs {
+			if p == pai {
+				return pairs
+			}
+		}
+
+		return append(pairs, pai)
+	}
 
 	for _, pai := range *hand {
 		if prevPai == pai {
-			numberOfPairs += 1
+			pairs = appendIfMissing(pairs, pai)
 			prevPai = mahjong.Unknown
 		} else {
 			prevPai = pai
 		}
 	}
 
-	return numberOfPairs == 6
+	return len(pairs) == 6
 }
 
 func JudgeTenpai(hands string) bool {
