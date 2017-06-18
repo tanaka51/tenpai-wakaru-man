@@ -23,3 +23,28 @@ func TestParse(t *testing.T) {
 		}
 	}
 }
+
+var testsMeld = []struct {
+	first    Pai
+	second   Pai
+	third    Pai
+	expected bool
+}{
+	{Char1, Char2, Char3, true},
+	{Char1, Char1, Char1, true},
+	{Char9, Char8, Char7, true},
+	{East, East, East, true},
+	{White, Green, Red, false},
+	{White, White, White, true},
+	{Dots2, Dots2, Dots2, true},
+	{Bamb6, Bamb6, Bamb6, true},
+	{Char2, Dots2, Bamb2, false},
+}
+
+func TestIsMeld(t *testing.T) {
+	for _, test := range testsMeld {
+		if result := isMeld(test.first, test.second, test.third); result != test.expected {
+			t.Errorf("%s %s %s should be %v but %v", test.first, test.second, test.third, test.expected, result)
+		}
+	}
+}

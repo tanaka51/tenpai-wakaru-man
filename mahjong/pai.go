@@ -121,6 +121,19 @@ func (p Pai) String() string {
 	}
 }
 
+func (p Pai) IsNumber() bool {
+	switch p {
+	case Char1, Char2, Char3, Char4, Char5, Char6, Char7, Char8, Char9:
+		return true
+	case Dots1, Dots2, Dots3, Dots4, Dots5, Dots6, Dots7, Dots8, Dots9:
+		return true
+	case Bamb1, Bamb2, Bamb3, Bamb4, Bamb5, Bamb6, Bamb7, Bamb8, Bamb9:
+		return true
+	default:
+		return false
+	}
+}
+
 func applySuits(hand *Hand, suit rune, paiStack []rune) {
 	switch suit {
 	case 'm':
@@ -233,4 +246,24 @@ func Parse(handString string) (*Hand, error) {
 	})
 
 	return &hand, nil
+}
+
+func isMeld(first, second, third Pai) bool {
+	if first == second && second == third {
+		return true
+	}
+
+	if !(first.IsNumber() && second.IsNumber() && third.IsNumber()) {
+		return false
+	}
+
+	if (first+2) == (second+1) && (second+1) == (third) {
+		return true
+	}
+
+	if (first) == (second+1) && (second+1) == (third+2) {
+		return true
+	}
+
+	return false
 }
