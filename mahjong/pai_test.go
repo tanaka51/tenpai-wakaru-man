@@ -1,4 +1,4 @@
-package pai
+package mahjong
 
 import (
 	"reflect"

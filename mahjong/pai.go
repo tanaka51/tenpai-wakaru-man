@@ -1,15 +1,15 @@
-package pai
+package mahjong
 
 import (
 	"fmt"
 	"sort"
 )
 
-type Value int
-type Hand []Value
+type Pai int
+type Hand []Pai
 
 const (
-	Unknown Value = iota
+	Unknown Pai = iota
 	Char1
 	Char2
 	Char3
@@ -46,7 +46,7 @@ const (
 	Red
 )
 
-func (p Value) String() string {
+func (p Pai) String() string {
 	switch p {
 	case Char1:
 		return "Char1"
