@@ -20,7 +20,7 @@ func TestJudgeTenpai(t *testing.T) {
 	for _, testcase := range testcases {
 		result := JudgeTenpai(testcase.hands)
 		if result != testcase.expected {
-			t.Errorf("%s must be %v", testcase.hands, testcase.expected)
+			t.Errorf("%s must be %v but %v", testcase.hands, testcase.expected, result)
 		}
 	}
 }
