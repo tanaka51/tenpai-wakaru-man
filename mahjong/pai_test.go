@@ -13,6 +13,7 @@ var tests = []struct {
 	{"123m123p123sRGH1m", Hand{Char1, Char1, Char2, Char3, Dots1, Dots2, Dots3, Bamb1, Bamb2, Bamb3, White, Green, Red}},
 	{"123123mRRRGGGE", Hand{Char1, Char1, Char2, Char2, Char3, Char3, East, Green, Green, Green, Red, Red, Red}},
 	{"S9pH8m7sW654pN32m1s", Hand{Char2, Char3, Char8, Dots4, Dots5, Dots6, Dots9, Bamb1, Bamb7, West, North, White}},
+	{"EEESSSWWWNNNH", Hand{East, East, East, South, South, South, West, West, West, North, North, North, White}},
 }
 
 func TestParse(t *testing.T) {
@@ -43,7 +44,7 @@ var testsMeld = []struct {
 
 func TestIsMeld(t *testing.T) {
 	for _, test := range testsMeld {
-		if result := isMeld(test.first, test.second, test.third); result != test.expected {
+		if result := IsMeld(test.first, test.second, test.third); result != test.expected {
 			t.Errorf("%s %s %s should be %v but %v", test.first, test.second, test.third, test.expected, result)
 		}
 	}

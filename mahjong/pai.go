@@ -209,10 +209,10 @@ func applySuits(hand *Hand, suit rune, paiStack []rune) {
 }
 
 func Parse(handString string) (*Hand, error) {
-	paiStack := []rune{rune(handString[0])}
+	paiStack := []rune{}
 	hand := Hand{}
 
-	for index, paiRune := range handString[1:] {
+	for index, paiRune := range handString {
 		switch paiRune {
 		case '1', '2', '3', '4', '5', '6', '7', '8', '9':
 			paiStack = append(paiStack, paiRune)
@@ -248,7 +248,7 @@ func Parse(handString string) (*Hand, error) {
 	return &hand, nil
 }
 
-func isMeld(first, second, third Pai) bool {
+func IsMeld(first, second, third Pai) bool {
 	if first == second && second == third {
 		return true
 	}
