@@ -10,7 +10,7 @@ var testcases = []struct {
 }{
 	{"123456789m123p1s", true},
 	{"111222333m111p1s", true},
-	{"EEESSSWWWNNNW", true},
+	{"EEESSSWWWNNNH", true},
 	{"13579m2468p1357s", false},
 	{"13579m2468pESWN", false},
 	{"1133557799mEEN", true},

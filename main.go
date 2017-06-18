@@ -2,76 +2,47 @@ package main
 
 import (
 	"fmt"
-	"strconv"
+
+	"github.com/tanaka51/tenpai-wakaru-man/mahjong"
 )
 
-func checkMeld(first, second, third string) bool {
-	if first == second && second == third {
-		return true
-	}
+func checkRegularWinningHands(hand *mahjong.Hand) bool {
+	var numberOfMeld int
+	var secondPrevPai mahjong.Pai
+	var firstPrevPai mahjong.Pai
 
-	iFirst, _ := strconv.Atoi(first)
-	iSecond, _ := strconv.Atoi(second)
-	iThird, _ := strconv.Atoi(third)
-
-	if iFirst+1 == iSecond && iSecond == iThird-1 {
-		return true
-	}
-
-	return false
-}
-
-func checkRegularWinningHands(hands string) bool {
-	var number_of_meld = 0
-	second_prev_pai := string(hands[0])
-	first_prev_pai := string(hands[1])
-
-	for _, _pai := range hands[2:] {
-		pai := string(_pai)
-
-		switch pai {
-		case "m", "p", "s":
+	for _, pai := range *hand {
+		if secondPrevPai == mahjong.Unknown {
+			secondPrevPai = pai
 			continue
 		}
 
-		if second_prev_pai == "" {
-			second_prev_pai = pai
+		if firstPrevPai == mahjong.Unknown {
+			firstPrevPai = pai
 			continue
 		}
 
-		if first_prev_pai == "" {
-			first_prev_pai = pai
-			continue
-		}
-
-		if checkMeld(second_prev_pai, first_prev_pai, pai) {
-			number_of_meld += 1
-			second_prev_pai = ""
-			first_prev_pai = ""
+		if mahjong.IsMeld(secondPrevPai, firstPrevPai, pai) {
+			numberOfMeld += 1
+			secondPrevPai = mahjong.Unknown
+			firstPrevPai = mahjong.Unknown
 		} else {
-			second_prev_pai = first_prev_pai
-			first_prev_pai = pai
+			secondPrevPai = firstPrevPai
+			firstPrevPai = pai
 		}
 	}
 
-	return (number_of_meld == 4)
+	return (numberOfMeld == 4)
 }
 
-func checkSevenPairs(hands string) bool {
-	prevPai := string(hands[0])
-	numberOfPairs := 0
+func checkSevenPairs(hand *mahjong.Hand) bool {
+	var numberOfPairs int
+	var prevPai mahjong.Pai
 
-	for _, _pai := range hands[1:] {
-		pai := string(_pai)
-
-		switch pai {
-		case "m", "p", "s":
-			continue
-		}
-
+	for _, pai := range *hand {
 		if prevPai == pai {
 			numberOfPairs += 1
-			prevPai = ""
+			prevPai = mahjong.Unknown
 		} else {
 			prevPai = pai
 		}
@@ -81,7 +52,8 @@ func checkSevenPairs(hands string) bool {
 }
 
 func JudgeTenpai(hands string) bool {
-	return checkRegularWinningHands(hands) || checkSevenPairs(hands)
+	hand, _ := mahjong.Parse(hands)
+	return checkRegularWinningHands(hand) || checkSevenPairs(hand)
 }
 
 func main() {
