@@ -6,9 +6,11 @@ import (
 )
 
 type Value int
+type Hand []Value
 
 const (
-	Char1 Value = iota
+	Unknown Value = iota
+	Char1
 	Char2
 	Char3
 	Char4
@@ -119,7 +121,7 @@ func (p Value) String() string {
 	}
 }
 
-func applySuits(hand *[]Value, suit rune, paiStack []rune) {
+func applySuits(hand *Hand, suit rune, paiStack []rune) {
 	switch suit {
 	case 'm':
 		for _, pai := range paiStack {
@@ -193,9 +195,9 @@ func applySuits(hand *[]Value, suit rune, paiStack []rune) {
 	}
 }
 
-func Parse(handString string) (*[]Value, error) {
+func Parse(handString string) (*Hand, error) {
 	paiStack := []rune{rune(handString[0])}
-	hand := []Value{}
+	hand := Hand{}
 
 	for index, paiRune := range handString[1:] {
 		switch paiRune {
