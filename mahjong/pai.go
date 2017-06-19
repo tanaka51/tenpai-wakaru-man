@@ -6,7 +6,6 @@ import (
 )
 
 type Pai int
-type Hand []Pai
 
 const (
 	Unknown Pai = iota
