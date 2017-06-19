@@ -12,7 +12,7 @@ var tests = []struct {
 	{"123456789mESWN", Hand{Char1, Char2, Char3, Char4, Char5, Char6, Char7, Char8, Char9, East, South, West, North}},
 	{"123m123p123sRGH1m", Hand{Char1, Char1, Char2, Char3, Dots1, Dots2, Dots3, Bamb1, Bamb2, Bamb3, White, Green, Red}},
 	{"123123mRRRGGGE", Hand{Char1, Char1, Char2, Char2, Char3, Char3, East, Green, Green, Green, Red, Red, Red}},
-	{"S9pH8m7sW654pN32m1s", Hand{Char2, Char3, Char8, Dots4, Dots5, Dots6, Dots9, Bamb1, Bamb7, West, North, White}},
+	{"S9pH8m7sW654pN32m1s", Hand{Char2, Char3, Char8, Dots4, Dots5, Dots6, Dots9, Bamb1, Bamb7, South, West, North, White}},
 	{"EEESSSWWWNNNH", Hand{East, East, East, South, South, South, West, West, West, North, North, North, White}},
 }
 
