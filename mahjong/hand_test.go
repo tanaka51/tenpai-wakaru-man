@@ -6,11 +6,16 @@ var regularWiningHandTests = []struct {
 	hand     *Hand
 	expected bool
 }{
-	// {
-	// 	&Hand{
-	// 		Char1, Char1, Char2, Char2, Char3, Char3, Char4, Char5, Char6, Char7, Char8, Char9, Char9,
-	// 	}, true,
-	// },
+	{
+		&Hand{
+			Char1, Char1, Char2, Char2, Char3, Char3, Char4, Char5, Char6, Char7, Char8, Char9, Char9,
+		}, true,
+	},
+	{
+		&Hand{
+			Char1, Char2, Char3, Char7, Char8, Dots7, Dots7, Dots7, Bamb5, Bamb6, Bamb7, North, North,
+		}, true,
+	},
 	{
 		&Hand{
 			Char1, Char2, Char3, Char4, Char5, Char6, Char7, Char8, Char9, Bamb1, Bamb2, Bamb3, North,
