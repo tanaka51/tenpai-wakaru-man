@@ -1,25 +1,6 @@
 package mahjong
 
-import "fmt"
-
 type Hand []Pai
-
-func (hand *Hand) groupByType() (char, dots, bamb, oner []Pai) {
-	for _, pai := range *hand {
-		switch pai {
-		case Char1, Char2, Char3, Char4, Char5, Char6, Char7, Char8, Char9:
-			char = append(char, pai)
-		case Dots1, Dots2, Dots3, Dots4, Dots5, Dots6, Dots7, Dots8, Dots9:
-			dots = append(dots, pai)
-		case Bamb1, Bamb2, Bamb3, Bamb4, Bamb5, Bamb6, Bamb7, Bamb8, Bamb9:
-			bamb = append(bamb, pai)
-		case East, South, West, North, White, Green, Red:
-			oner = append(oner, pai)
-		}
-	}
-
-	return char, dots, bamb, oner
-}
 
 func remove(list []Pai, p Pai) []Pai {
 	var result []Pai
@@ -126,21 +107,9 @@ func (hand *Hand) isRegularWinningHands() bool {
 	var secondPrevPai Pai
 	var firstPrevPai Pai
 
-	char, dots, bamb, oner := hand.groupByType()
-	fmt.Printf("hand: %v\n", hand)
-	fmt.Printf("char: %v\n", char)
-	fmt.Printf("dots: %v\n", dots)
-	fmt.Printf("bamb: %v\n", bamb)
-	fmt.Printf("oner: %v\n", oner)
-	fmt.Println("---")
-
 	_hand := *hand
 	cand := [][][]Pai{[][]Pai{}}
 	cand = createCandidates(_hand, cand)
-
-	for _, a := range cand {
-		fmt.Printf("%v\n", a)
-	}
 
 	for _, pai := range *hand {
 		if secondPrevPai == Unknown {
