@@ -11,21 +11,21 @@ var regularWiningHandTests = []struct {
 			Char1, Char1, Char2, Char2, Char3, Char3, Char4, Char5, Char6, Char7, Char8, Char9, Char9,
 		}, true,
 	},
-	// {
-	// 	&Hand{
-	// 		Char1, Bamb1, Dots1, Char5, Bamb5, Dots5, Char9, Bamb9, Dots9, North, Red, Red, White,
-	// 	}, true,
-	// },
-	// {
-	// 	&Hand{
-	// 		Char1, Char2, Char3, Char7, Char8, Dots7, Dots7, Dots7, Bamb5, Bamb6, Bamb7, North, North,
-	// 	}, true,
-	// },
-	// {
-	// 	&Hand{
-	// 		Char1, Char2, Char3, Char4, Char5, Char6, Char7, Char8, Char9, Bamb1, Bamb2, Bamb3, North,
-	// 	}, true,
-	// },
+	{
+		&Hand{
+			Char1, Bamb1, Dots1, Char5, Bamb5, Dots5, Char9, Bamb9, Dots9, North, Red, Red, White,
+		}, false,
+	},
+	{
+		&Hand{
+			Char1, Char2, Char3, Char7, Char8, Dots7, Dots7, Dots7, Bamb5, Bamb6, Bamb7, North, North,
+		}, true,
+	},
+	{
+		&Hand{
+			Char1, Char2, Char3, Char4, Char5, Char6, Char7, Char8, Char9, Dots1, Dots2, Dots3, North,
+		}, true,
+	},
 }
 
 func TestIsRegularWinningHands(t *testing.T) {

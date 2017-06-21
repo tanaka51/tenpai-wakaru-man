@@ -47,7 +47,8 @@ func createCandidates(list []Pai, cand [][][]Pai) [][][]Pai {
 	nextTwo := current + 2
 
 	if current.IsNumber() {
-		if contain(remain, nextOne) && contain(remain, nextTwo) {
+		if current.Suit() == nextOne.Suit() && current.Suit() == nextTwo.Suit() &&
+			contain(remain, nextOne) && contain(remain, nextTwo) {
 			idx := len(cand) - 1
 			tmp := make([][]Pai, len(cand[idx]))
 			copy(tmp, cand[idx])
@@ -57,7 +58,7 @@ func createCandidates(list []Pai, cand [][][]Pai) [][][]Pai {
 			cand = append(cand, tmp)
 		}
 
-		if contain(remain, nextOne) {
+		if current.Suit() == nextOne.Suit() && contain(remain, nextOne) {
 			idx := len(cand) - 1
 			tmp := make([][]Pai, len(cand[idx]))
 			copy(tmp, cand[idx])
@@ -67,7 +68,7 @@ func createCandidates(list []Pai, cand [][][]Pai) [][][]Pai {
 			cand = append(cand, tmp)
 		}
 
-		if contain(remain, nextTwo) {
+		if current.Suit() == nextTwo.Suit() && contain(remain, nextTwo) {
 			idx := len(cand) - 1
 			tmp := make([][]Pai, len(cand[idx]))
 			copy(tmp, cand[idx])
@@ -103,36 +104,18 @@ func createCandidates(list []Pai, cand [][][]Pai) [][][]Pai {
 }
 
 func (hand *Hand) isRegularWinningHands() bool {
-	var numberOfMeld int
-	var secondPrevPai Pai
-	var firstPrevPai Pai
-
 	_hand := *hand
 	cand := [][][]Pai{[][]Pai{}}
 	cand = createCandidates(_hand, cand)
 
-	for _, pai := range *hand {
-		if secondPrevPai == Unknown {
-			secondPrevPai = pai
-			continue
-		}
-
-		if firstPrevPai == Unknown {
-			firstPrevPai = pai
-			continue
-		}
-
-		if IsMeld(secondPrevPai, firstPrevPai, pai) {
-			numberOfMeld += 1
-			secondPrevPai = Unknown
-			firstPrevPai = Unknown
-		} else {
-			secondPrevPai = firstPrevPai
-			firstPrevPai = pai
+	for _, a := range cand {
+		// fmt.Printf("%v\n", a)
+		if len(a) == 5 {
+			return true
 		}
 	}
 
-	return (numberOfMeld == 4)
+	return false
 }
 
 func (hand *Hand) isSevenPairs() bool {
