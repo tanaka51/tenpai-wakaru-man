@@ -6,6 +6,7 @@ import (
 )
 
 type Pai int
+type Suit int
 
 const (
 	Unknown Pai = iota
@@ -43,6 +44,13 @@ const (
 	White
 	Green
 	Red
+)
+
+const (
+	UnknownSuit Suit = iota + 100
+	Char
+	Dots
+	Bamb
 )
 
 func (p Pai) String() string {
@@ -117,6 +125,32 @@ func (p Pai) String() string {
 		return "Red"
 	default:
 		return "Unknown"
+	}
+}
+
+func (s Suit) String() string {
+	switch s {
+	case Char:
+		return "Char"
+	case Dots:
+		return "Dots"
+	case Bamb:
+		return "Bamb"
+	default:
+		return "Unknown"
+	}
+}
+
+func (p Pai) Suit() Suit {
+	switch p {
+	case Char1, Char2, Char3, Char4, Char5, Char6, Char7, Char8, Char9:
+		return Char
+	case Dots1, Dots2, Dots3, Dots4, Dots5, Dots6, Dots7, Dots8, Dots9:
+		return Dots
+	case Bamb1, Bamb2, Bamb3, Bamb4, Bamb5, Bamb6, Bamb7, Bamb8, Bamb9:
+		return Bamb
+	default:
+		return UnknownSuit
 	}
 }
 
