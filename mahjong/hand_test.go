@@ -28,14 +28,6 @@ var regularWiningHandTests = []struct {
 	},
 }
 
-func TestIsRegularWinningHands(t *testing.T) {
-	for _, test := range regularWiningHandTests {
-		if result := test.hand.isRegularWinningHands(); result != test.expected {
-			t.Errorf("expected %v but got %v. hands: %v", test.expected, result, test.hand)
-		}
-	}
-}
-
 var sevenPairsHandTests = []struct {
 	hand     *Hand
 	expected bool
@@ -50,14 +42,6 @@ var sevenPairsHandTests = []struct {
 			Char1, Char1, Char1, Char1, Char3, Char3, Char4, Char4, Char5, Char5, Bamb1, Bamb1, North,
 		}, false,
 	},
-}
-
-func TestIsSevenPairs(t *testing.T) {
-	for _, test := range sevenPairsHandTests {
-		if result := test.hand.isSevenPairs(); result != test.expected {
-			t.Errorf("expected %v but got %v. hands: %v", test.expected, result, test.hand)
-		}
-	}
 }
 
 var thirteenOrphansTests = []struct {
@@ -81,10 +65,24 @@ var thirteenOrphansTests = []struct {
 	},
 }
 
-func TestIsThirteenOrphans(t *testing.T) {
+func TestIsTenpai(t *testing.T) {
+	errorTemplate := "expected %v but got %v. hands: %v"
+
+	for _, test := range regularWiningHandTests {
+		if result := test.hand.IsTenpai(); result != test.expected {
+			t.Errorf(errorTemplate, test.expected, result, test.hand)
+		}
+	}
+
+	for _, test := range sevenPairsHandTests {
+		if result := test.hand.IsTenpai(); result != test.expected {
+			t.Errorf(errorTemplate, test.expected, result, test.hand)
+		}
+	}
+
 	for _, test := range thirteenOrphansTests {
-		if result := test.hand.isThirteenOrphans(); result != test.expected {
-			t.Errorf("expected %v but got %v. hands: %v", test.expected, result, test.hand)
+		if result := test.hand.IsTenpai(); result != test.expected {
+			t.Errorf(errorTemplate, test.expected, result, test.hand)
 		}
 	}
 }

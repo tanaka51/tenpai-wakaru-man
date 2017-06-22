@@ -103,73 +103,70 @@ func createCandidates(list []Pai, cand [][][]Pai) [][][]Pai {
 	return createCandidates(remain, cand)
 }
 
-func (hand *Hand) isRegularWinningHands() bool {
-	_hand := *hand
-	cand := [][][]Pai{[][]Pai{}}
-	cand = createCandidates(_hand, cand)
+func isUnique(list []Pai) bool {
+	result := []Pai{}
 
-	for _, a := range cand {
-		// fmt.Printf("%v\n", a)
-		if len(a) == 5 {
-			return true
+	for _, p := range list {
+		if contain(result, p) {
+			// nothing to do
+		} else {
+			result = append(result, p)
 		}
+	}
+
+	return len(list) == len(result)
+}
+
+func isSevenPairs(list [][]Pai) bool {
+	if len(list) != 7 {
+		return false
+	}
+
+	stack := []Pai{}
+	for _, pair := range list {
+		if len(pair) == 2 && pair[0] != pair[1] {
+			return false
+		}
+		stack = append(stack, pair[0])
+	}
+	return isUnique(stack)
+}
+
+func isThirteenOrphans(list [][]Pai) bool {
+	if len(list) == 12 || len(list) == 13 {
+		for _, pair := range list {
+			for _, pai := range pair {
+				if !pai.IsOrphan() {
+					return false
+				}
+			}
+		}
+		return true
 	}
 
 	return false
 }
 
-func (hand *Hand) isSevenPairs() bool {
-	var pairs []Pai
-	var prevPai Pai
-
-	appendIfMissing := func(pairs []Pai, pai Pai) []Pai {
-		for _, p := range pairs {
-			if p == pai {
-				return pairs
-			}
-		}
-
-		return append(pairs, pai)
-	}
-
-	for _, pai := range *hand {
-		if prevPai == pai {
-			pairs = appendIfMissing(pairs, pai)
-			prevPai = Unknown
-		} else {
-			prevPai = pai
-		}
-	}
-
-	return len(pairs) == 6
-}
-
-func (hand *Hand) isThirteenOrphans() bool {
-	var tmpHand Hand
-
-	appendIfMissing := func(hand Hand, pai Pai) Hand {
-		for _, p := range hand {
-			if p == pai {
-				return hand
-			}
-		}
-
-		return append(hand, pai)
-	}
-
-	for _, pai := range *hand {
-		if pai.IsOrphan() {
-			tmpHand = appendIfMissing(tmpHand, pai)
-		} else {
-			return false
-		}
-	}
-
-	return len(tmpHand) == 13 || len(tmpHand) == 12
-}
-
 func (hand *Hand) IsTenpai() bool {
-	return hand.isRegularWinningHands() ||
-		hand.isSevenPairs() ||
-		hand.isThirteenOrphans()
+	_hand := *hand
+	cand := [][][]Pai{[][]Pai{}}
+	cand = createCandidates(_hand, cand)
+
+	for _, a := range cand {
+		// regular type
+		if len(a) == 5 {
+			return true
+		}
+
+		// seven pairs
+		if isSevenPairs(a) {
+			return true
+		}
+
+		if isThirteenOrphans(a) {
+			return true
+		}
+	}
+
+	return false
 }

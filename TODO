@@ -1,4 +1,3 @@
-- Judge all type tenpais from candidates
 - Add more test cases
 - Rename method names
 - Refactor creating candidates function
